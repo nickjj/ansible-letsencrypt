@@ -1,0 +1,6 @@
+---
+
+- name: Restart service (nginx, apache, haproxy, etc.)
+  service:
+    name: '{{ letsencrypt_restart_service_name }}'
+    state: 'restarted'

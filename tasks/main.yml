@@ -1,0 +1,123 @@
+---
+
+- name: Create default acme-tiny directories
+  file:
+    path: '{{ item }}'
+    state: 'directory'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+  with_items:
+    - '{{ letsencrypt_install_path }}'
+    - '{{ letsencrypt_challenge_path }}'
+    - '{{ letsencrypt_certificate_path }}'
+    - '{{ letsencrypt_log_path }}'
+
+- name: Download Let's Encrypt intermediate and CA certificates
+  get_url:
+    url: '{{ item.url }}'
+    dest: '{{ letsencrypt_install_path }}/{{ item.file }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: True
+  with_items:
+    - url: '{{ letsencrypt_intermediate_url }}'
+      file: 'intermediate.crt'
+    - url: '{{ letsencrypt_ca_url }}'
+      file: 'ca.crt'
+
+- name: Force delete all keys, CSRs and certificates
+  file:
+    path: '{{ item }}'
+    state: 'absent'
+  with_items:
+    - '{{ letsencrypt_account_key_path }}'
+    - '{{ letsencrypt_domain_csr_path }}'
+    - '{{ letsencrypt_valid_certificate_path }}'
+    - '{{ letsencrypt_domain_key_path }}'
+    - '{{ letsencrypt_chained_pem_path }}'
+  when: letsencrypt_force_reset_all
+
+- name: Generate private account key
+  command: openssl genrsa -out {{ letsencrypt_account_key_path }}
+  args:
+    creates: '{{ letsencrypt_account_key_path }}'
+
+- name: Generate private domain key
+  command: openssl genrsa -out {{ letsencrypt_domain_key_path }}
+  args:
+    creates: '{{ letsencrypt_domain_key_path }}'
+
+- name: Generate certificate signing request (CSR) for your domain(s)
+  shell: >
+    openssl req \
+      -new \
+      -sha256 \
+      -key {{ letsencrypt_domain_key_path }} \
+      -subj "/" \
+      -reqexts SAN \
+      -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:{{ letsencrypt_domains | join(",DNS:") }}")) \
+      -out {{ letsencrypt_domain_csr_path }}
+  args:
+    executable: '/bin/bash'
+    creates: '{{ letsencrypt_domain_csr_path }}'
+
+- name: Copy acme_tiny to the system path
+  copy:
+    src: 'usr/local/bin/acme_tiny'
+    dest: '/usr/local/bin/acme_tiny'
+    group: 'root'
+    owner: 'root'
+    mode: '0755'
+
+- name: Investigate the Let's Encrypt SSL certificate
+  stat:
+    path: '{{ letsencrypt_valid_certificate_path }}'
+  register: letsencrypt_stat
+
+- name: Delete an invalid Let's Encrypt SSL certificate
+  file:
+    path: '{{ letsencrypt_valid_certificate_path }}'
+    state: 'absent'
+  when: ('size' in letsencrypt_stat.stat.keys()) and (letsencrypt_stat.stat.size == 0)
+
+- name: Generate Let's Encrypt SSL certificate for your domain(s)
+  shell: >
+    acme_tiny --account-key {{ letsencrypt_account_key_path }} \
+      --csr {{ letsencrypt_domain_csr_path }} \
+      --acme-dir {{ letsencrypt_challenge_path }} \
+      --ca {{ letsencrypt_default_ca }} > {{ letsencrypt_valid_certificate_path }}
+  args:
+    creates: '{{ letsencrypt_valid_certificate_path }}'
+  register: letsencrypt_register_output
+  failed_when: False
+
+- name: Show SSL certificate generation output
+  debug:
+    var: letsencrypt_register_output
+  failed_when: ('rc' in letsencrypt_register_output) and (not letsencrypt_register_output.rc == 0)
+
+- name: Complete trust chain
+  shell: 'cat {{ letsencrypt_valid_certificate_path }} {{ letsencrypt_install_path }}/intermediate.crt > {{ letsencrypt_chained_pem_path }}'
+  when: (letsencrypt_register_output | changed) and (letsencrypt_register_output.stderr.endswith('Certificate signed!'))
+  notify:
+    - Restart service (nginx, apache, haproxy, etc.)
+
+- name: Copy renew_certificate to the installation path
+  template:
+    src: 'usr/local/acme-tiny/renew_certificate.sh.j2'
+    dest: '{{ letsencrypt_install_path }}/renew_certificate.sh'
+    group: 'root'
+    owner: 'root'
+    mode: '0755'
+
+- name: Create crontab to renew SSL certificates
+  cron:
+    name: 'renew SSL certificates'
+    job: '{{ letsencrypt_install_path }}/renew_certificate.sh'
+    minute: '{{ letsencrypt_renew_minute }}'
+    hour: '{{ letsencrypt_renew_hour }}'
+    day: '{{ letsencrypt_renew_day }}'
+    weekday: '{{ letsencrypt_renew_weekday }}'
+    month: '{{ letsencrypt_renew_month }}'

@@ -1,0 +1,28 @@
+---
+
+letsencrypt_domains: []
+
+letsencrypt_restart_service_name: 'nginx'
+
+letsencrypt_install_path: '/usr/local/acme-tiny'
+letsencrypt_challenge_path: '/usr/share/nginx/challenges/.well-known/acme-challenge'
+letsencrypt_certificate_path: '/etc/nginx/ssl'
+letsencrypt_log_path: '/var/log/acme-tiny'
+
+letsencrypt_account_key_path: '{{ letsencrypt_install_path }}/account.key'
+letsencrypt_domain_csr_path: '{{ letsencrypt_install_path }}/{{ letsencrypt_domains[0] }}.csr'
+letsencrypt_valid_certificate_path: '{{ letsencrypt_install_path }}/{{ letsencrypt_domains[0] }}.crt'
+letsencrypt_domain_key_path: '{{ letsencrypt_certificate_path }}/{{ letsencrypt_domains[0] }}.key'
+letsencrypt_chained_pem_path: '{{ letsencrypt_certificate_path }}/{{ letsencrypt_domains[0] }}.pem'
+
+letsencrypt_intermediate_url: 'https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem'
+letsencrypt_ca_url: 'https://letsencrypt.org/certs/isrgrootx1.pem'
+letsencrypt_default_ca: 'https://acme-staging.api.letsencrypt.org'
+
+letsencrypt_renew_minute: '0'
+letsencrypt_renew_hour: '0'
+letsencrypt_renew_day: '1'
+letsencrypt_renew_weekday: '*'
+letsencrypt_renew_month: '*'
+
+letsencrypt_force_reset_all: False
