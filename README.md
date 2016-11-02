@@ -64,12 +64,8 @@ letsencrypt_ca_url: 'https://letsencrypt.org/certs/isrgrootx1.pem'
 #   letsencrypt_default_ca: 'https://acme-v01.api.letsencrypt.org'
 letsencrypt_default_ca: 'https://acme-staging.api.letsencrypt.org'
 
-# How often should we try to renew in our crontab? Default is once per month.
-letsencrypt_renew_minute: '0'
-letsencrypt_renew_hour: '0'
-letsencrypt_renew_day: '1'
-letsencrypt_renew_weekday: '*'
-letsencrypt_renew_month: '*'
+# How often should we try to renew certificates? Default is once per month.
+letsencrypt_cron_renew: ['0', '0', '1', '*', '*']
 
 # When set to True this will delete all private keys, CSRs and certificates.
 # You would use this when you want to force create new certificates but be

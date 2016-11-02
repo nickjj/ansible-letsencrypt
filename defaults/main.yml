@@ -19,10 +19,6 @@ letsencrypt_intermediate_url: 'https://letsencrypt.org/certs/lets-encrypt-x3-cro
 letsencrypt_ca_url: 'https://letsencrypt.org/certs/isrgrootx1.pem'
 letsencrypt_default_ca: 'https://acme-staging.api.letsencrypt.org'
 
-letsencrypt_renew_minute: '0'
-letsencrypt_renew_hour: '0'
-letsencrypt_renew_day: '1'
-letsencrypt_renew_weekday: '*'
-letsencrypt_renew_month: '*'
+letsencrypt_cron_renew: ['0', '0', '1', '*', '*']
 
 letsencrypt_force_reset_all: False
