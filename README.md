@@ -67,8 +67,10 @@ letsencrypt_default_ca: 'https://acme-staging.api.letsencrypt.org'
 letsencrypt_cron_renew: ['0', '0', '1', '*', '*']
 
 # When set to True this will delete all private keys, CSRs and certificates.
-# You would use this when you want to force create new certificates but be
-# warned that you may hit rate limits, so only use this in emergencies.
+# You would use this when you want to force create new certificates, such as
+# adding a new sub-domain to your certificate file.
+#
+# Don't always keep this enabled or you'll likely run into rate limits.
 letsencrypt_force_reset_all: False
 ```
 
