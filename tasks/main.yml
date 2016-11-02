@@ -13,19 +13,14 @@
     - '{{ letsencrypt_certificate_path }}'
     - '{{ letsencrypt_log_path }}'
 
-- name: Download Let's Encrypt intermediate and CA certificates
+- name: Download Let's Encrypt intermediate certificate
   get_url:
-    url: '{{ item.url }}'
-    dest: '{{ letsencrypt_install_path }}/{{ item.file }}'
+    url: '{{ letsencrypt_intermediate_url }}'
+    dest: '{{ letsencrypt_install_path }}/intermediate.crt'
     owner: 'root'
     group: 'root'
     mode: '0644'
     force: True
-  with_items:
-    - url: '{{ letsencrypt_intermediate_url }}'
-      file: 'intermediate.crt'
-    - url: '{{ letsencrypt_ca_url }}'
-      file: 'ca.crt'
 
 - name: Force delete all keys, CSRs and certificates
   file:

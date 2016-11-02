@@ -53,9 +53,8 @@ letsencrypt_valid_certificate_path: '{{ letsencrypt_install_path }}/{{ letsencry
 letsencrypt_domain_key_path: '{{ letsencrypt_certificate_path }}/{{ letsencrypt_domains[0] }}.key'
 letsencrypt_chained_pem_path: '{{ letsencrypt_certificate_path }}/{{ letsencrypt_domains[0] }}.pem'
 
-# Locations of various URLs on Let's Encrypt.
+# Locations of the intermediate certificate used in the chain.
 letsencrypt_intermediate_url: 'https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem'
-letsencrypt_ca_url: 'https://letsencrypt.org/certs/isrgrootx1.pem'
 
 # By default we'll use the staging server endpoint so that you're forced to
 # explicitly set this when you're ready for production.
