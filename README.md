@@ -1,4 +1,4 @@
-## What is ansible-letsencrypt?
+## What is ansible-letsencrypt? [![Build Status](https://secure.travis-ci.org/nickjj/ansible-letsencrypt.png)](http://travis-ci.org/nickjj/ansible-letsencrypt)
 
 It is an [Ansible](http://www.ansible.com/home) role to generate and automate
 renewal for Let's Encrypt SSL certificates. It uses
