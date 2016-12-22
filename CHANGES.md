@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.2.1
+
+*Released: December 22nd 2016*
+
+- Fix "Scheme missing" wget v1.16 issue in renew script
+- Fix `acme_tiny` path not existing in the renew script
+
 ### v0.2.0
 
 *Released: November 2nd 2016*
