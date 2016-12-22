@@ -6,7 +6,7 @@ TEMP_CERT_PATH="/tmp/{{ letsencrypt_domains[0] }}.crt"
 INTERMEDIATE_PATH="{{ letsencrypt_install_path }}/intermediate.crt"
 
 # Generate Let's Encrypt certificate for your domain(s).
-acme_tiny \
+/usr/local/bin/acme_tiny \
   --account-key {{ letsencrypt_account_key_path }} \
   --csr {{ letsencrypt_domain_csr_path }} \
   --acme-dir {{ letsencrypt_challenge_path }} \
