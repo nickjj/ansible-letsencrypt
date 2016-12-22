@@ -14,7 +14,7 @@ INTERMEDIATE_PATH="{{ letsencrypt_install_path }}/intermediate.crt"
   2>> {{ letsencrypt_log_path }}/acme-tiny.log
 
 # Complete trust chain by pulling down a fresh intermediate certificate.
-wget -O - {{ letsencrypt_intermediate_url }} "${INTERMEDIATE_PATH}"
+wget {{ letsencrypt_intermediate_url }} -O "${INTERMEDIATE_PATH}"
 cat "${TEMP_CERT_PATH}" "${INTERMEDIATE_PATH}" > {{ letsencrypt_chained_pem_path }}
 
 # Restart service to pickup the certificate change.
