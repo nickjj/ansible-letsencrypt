@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.2.2
+
+*Released: January 23rd 2017*
+
+- Add `sudo` when restarting web service to pick up the changes
+
 ### v0.2.1
 
 *Released: December 22nd 2016*
