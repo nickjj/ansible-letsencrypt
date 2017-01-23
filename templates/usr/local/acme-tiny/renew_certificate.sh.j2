@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -18,4 +18,4 @@ wget {{ letsencrypt_intermediate_url }} -O "${INTERMEDIATE_PATH}"
 cat "${TEMP_CERT_PATH}" "${INTERMEDIATE_PATH}" > {{ letsencrypt_chained_pem_path }}
 
 # Restart service to pickup the certificate change.
-service {{ letsencrypt_restart_service_name }} restart
+sudo service {{ letsencrypt_restart_service_name }} restart
