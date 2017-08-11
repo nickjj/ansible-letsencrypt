@@ -111,7 +111,7 @@
   cron:
     name: 'renew SSL certificates for {{ letsencrypt_domains[0] }}'
     job: '{{ letsencrypt_install_path }}/{{ letsencrypt_domains[0] }}-renew_certificate.sh'
-    minute: '{{ letsencrypt_cron_renew[0] }}'
+    minute: '{{ 59 | random }}'
     hour: '{{ letsencrypt_cron_renew[1] }}'
     day: '{{ letsencrypt_cron_renew[2] }}'
     weekday: '{{ letsencrypt_cron_renew[3] }}'
