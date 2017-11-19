@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.2.3
+
+*Released: November 19th 2017*
+
+- Update Agreement URL in acme-tiny to reflect the latest Let's Encrypt changes
+
 ### v0.2.2
 
 *Released: January 23rd 2017*
