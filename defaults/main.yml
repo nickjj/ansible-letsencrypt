@@ -3,6 +3,8 @@
 letsencrypt_domains: []
 
 letsencrypt_restart_service_name: 'nginx'
+letsencrypt_restart_services:
+    - "{{ letsencrypt_restart_service_name }}"
 
 letsencrypt_install_path: '/usr/local/acme-tiny'
 letsencrypt_challenge_path: '/usr/share/nginx/challenges/.well-known/acme-challenge'
