@@ -35,8 +35,8 @@ Below is a list of default values along with a description of what they do.
 # both the root domain and the www sub-domain.
 letsencrypt_domains: []
 
-# Which web server services need to get restarted at the end of the run?
-letsencrypt_restart_services: ['nginx']
+# Which web server services need to get reloaded at the end of the run?
+letsencrypt_reload_services: ['nginx']
 
 # Installation paths.
 letsencrypt_install_path: '/usr/local/acme-tiny'
