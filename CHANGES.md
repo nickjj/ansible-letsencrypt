@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.3.0
+
+*Released: November 9th 2019*
+
+- Update to using the ACME v2 API since v1 is on its way to being deprecated
+
 ### v0.2.3
 
 *Released: November 19th 2017*
