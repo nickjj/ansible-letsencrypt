@@ -60,8 +60,8 @@ letsencrypt_intermediate_url: 'https://letsencrypt.org/certs/lets-encrypt-x3-cro
 # explicitly set this when you're ready for production.
 #
 # For production, set this to:
-#   letsencrypt_default_ca: 'https://acme-v02.api.letsencrypt.org'
-letsencrypt_default_ca: 'https://acme-staging.api.letsencrypt.org'
+#   letsencrypt_default_ca: 'https://acme-v02.api.letsencrypt.org/directory'
+letsencrypt_default_ca: 'https://acme-staging-v02.api.letsencrypt.org/directory'
 
 # How often should we try to renew certificates? Default is once per month.
 letsencrypt_cron_renew: ['0', '0', '1', '*', '*']
@@ -100,7 +100,7 @@ relative to your `inventory` directory and then making it look like this:
 ---
 
 letsencrypt_domains: ['blog.example.com']
-letsencrypt_default_ca: 'https://acme-v02.api.letsencrypt.org'
+letsencrypt_default_ca: 'https://acme-staging-v02.api.letsencrypt.org/directory'
 ```
 
 ## Revoking certificates
