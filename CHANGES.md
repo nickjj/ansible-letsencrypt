@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.3.1
+
+*Released: November 9th 2019*
+
+- Fix README to reference the correct ACME v2 API endpoints
+
 ### v0.3.0
 
 *Released: November 9th 2019*
