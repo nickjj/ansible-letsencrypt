@@ -82,7 +82,7 @@
     acme_tiny --account-key {{ letsencrypt_account_key_path }} \
       --csr {{ letsencrypt_domain_csr_path }} \
       --acme-dir {{ letsencrypt_challenge_path }} \
-      --ca {{ letsencrypt_default_ca }} > {{ letsencrypt_valid_certificate_path }}
+      --directory-url {{ letsencrypt_default_ca }} > {{ letsencrypt_valid_certificate_path }}
   args:
     creates: '{{ letsencrypt_valid_certificate_path }}'
   register: letsencrypt_register_output

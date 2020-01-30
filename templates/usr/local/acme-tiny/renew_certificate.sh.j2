@@ -10,7 +10,7 @@ INTERMEDIATE_PATH="{{ letsencrypt_install_path }}/intermediate.crt"
   --account-key {{ letsencrypt_account_key_path }} \
   --csr {{ letsencrypt_domain_csr_path }} \
   --acme-dir {{ letsencrypt_challenge_path }} \
-  --ca {{ letsencrypt_default_ca }} > "${TEMP_CERT_PATH}" \
+  --directory-url {{ letsencrypt_default_ca }} > "${TEMP_CERT_PATH}" \
   2>> {{ letsencrypt_log_path }}/acme-tiny.log
 
 # Complete trust chain by pulling down a fresh intermediate certificate.
