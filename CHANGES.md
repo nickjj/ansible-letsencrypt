@@ -1,5 +1,14 @@
 # Changelog
 
+### v0.3.2
+
+*Released: January 29th 2020*
+
+- Update acme_tiny to its latest version
+- Switch from `--ca` to `--directory-url`
+- Fix `KeyError: newAccount` error
+- Fix error 104 related to creating a new-nonce
+
 ### v0.3.1
 
 *Released: November 9th 2019*
