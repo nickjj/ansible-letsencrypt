@@ -1,6 +1,7 @@
 ---
 
-- name: Restart service (nginx, apache, haproxy, etc.)
+- name: Reload service (nginx, apache, haproxy, etc.)
   service:
-    name: '{{ letsencrypt_restart_service_name }}'
-    state: 'restarted'
+    name: '{{ item }}'
+    state: 'reloaded'
+  with_items: '{{ letsencrypt_reload_services }}'

@@ -17,5 +17,7 @@ INTERMEDIATE_PATH="{{ letsencrypt_install_path }}/intermediate.crt"
 wget {{ letsencrypt_intermediate_url }} -O "${INTERMEDIATE_PATH}"
 cat "${TEMP_CERT_PATH}" "${INTERMEDIATE_PATH}" > {{ letsencrypt_chained_pem_path }}
 
-# Restart service to pickup the certificate change.
-sudo service {{ letsencrypt_restart_service_name }} restart
+# Reload services to pickup the certificate change.
+{% for service in letsencrypt_reload_services %}
+sudo service {{ service }} reload
+{% endfor %}
